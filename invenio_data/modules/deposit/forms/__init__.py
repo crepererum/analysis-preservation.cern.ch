@@ -22,4 +22,5 @@ from __future__ import absolute_import
 
 from .alice import *
 from .cms import *
+from .cmsquestions import *
 from .lhcb import *
