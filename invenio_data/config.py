@@ -19,19 +19,19 @@
 # 02D111-1307, USA.
 
 from invenio.base.config import PACKAGES as _PACKAGES
+from invenio.modules.oauthclient.contrib import cern
 
 PACKAGES = [
     "invenio_data.base",
     "invenio_data.modules.*",
 ] + _PACKAGES
 
-from invenio.base.config import EXTENSIONS as _EXTENSIONS
-
 DEPOSIT_TYPES = [
     'invenio_data.modules.deposit.workflows.cms.cms',
     'invenio_data.modules.deposit.workflows.alice.alice',
     'invenio_data.modules.deposit.workflows.lhcb.lhcb',
     'invenio_data.modules.deposit.workflows.questions.questions',
+    'invenio_data.modules.jsondeposit.workflows.test.test',
 ]
 
 CFG_SITE_URL = 'http://data-demo.cern.ch'
@@ -78,12 +78,11 @@ CFG_SITE_MISSION_INTL = {
 
 CFG_WEBSEARCH_DISPLAY_NEAREST_TERMS = 0
 
-from invenio.modules.oauthclient.contrib import cern
 OAUTHCLIENT_REMOTE_APPS = dict(
-        cern=cern.REMOTE_APP,
+    cern=cern.REMOTE_APP,
 )
 
 CERN_APP_CREDENTIALS = dict(
-        consumer_key="changeme",
-        consumer_secret= "changeme",
+    consumer_key="changeme",
+    consumer_secret="changeme",
 )

@@ -1,4 +1,5 @@
-{#
+# -*- coding: utf-8 -*-
+#
 # This file is part of CERN Analysis Preservation Framework.
 # Copyright (C) 2014, 2015 CERN.
 #
@@ -16,33 +17,22 @@
 # along with this software; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307,
 # USA.
-#}
 
-{% extends "page.html" %}
-{% block body %}
+"""Contains `sync_json`."""
 
-<div class="page-header">
-  <h3>{{ _('Select a Document Type') }}</h3>
-</div>
+from invenio_data.modules.jsondeposit.utils import blob2json, json2blob
 
-<div class="row">
-  <div id="webdeposit_types_accordion" class="col-md-offset-3 col-md-6 panel-group">
-    {% for deptype_group in deposition_types.values()|groupby('group') %}
-      {% for deptype in deptype_group.list|sort(attribute='name') %}
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4>
-              <a href="{{ url_for('.deposition_type_index', deposition_type=deptype.get_identifier()) }}">
-                <i class="glyphicon glyphicon-chevron-right pull-right"></i>
-                {{ deptype.name }}
-            </a>
-            </h4>
-          </div>
-        </div>
-      {% endfor %}
-    {% endfor %}
 
-  </div>
-</div>
-
-{% endblock %}
+# pylint: disable=W0613
+def sync_json(self, field_name, connected_field, action):
+    """Sync `json` with `jsonblob`."""
+    if action == 'set':
+        if field_name == 'json' and self.get('json'):
+            self.__setitem__('jsonblob',
+                             json2blob(self['json']),
+                             exclude=['connect'])
+        elif field_name == 'jsonblob':
+            self.__setitem__(
+                'json',
+                blob2json(self['jsonblob']),
+                exclude=['connect'])

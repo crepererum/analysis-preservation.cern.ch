@@ -1,0 +1,50 @@
+# -*- coding: utf-8 -*-
+#
+# This file is part of CERN Analysis Preservation Framework.
+# Copyright (C) 2014, 2015 CERN.
+#
+# CERN Analysis Preservation Framework is free software; you can
+# redistribute it and/or modify it under the terms of the GNU General
+# Public License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# CERN Analysis Preservation Framework is distributed in the hope that
+# it will be useful, but WITHOUT ANY WARRANTY; without even the
+# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE.  See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this software; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307,
+# USA
+
+"""Test form for jsondeposit."""
+
+from invenio.base.i18n import _
+from invenio.modules.deposit.form import WebDepositForm
+
+from ..jsonfield import JsonField
+from ..utils import internal_schema_url
+
+
+__all__ = ('TestForm', )
+
+
+class TestForm(WebDepositForm):
+
+    """Deposition Form."""
+
+    """ Form Configuration variables """
+    _name = 'test'
+    _title = _('JSON Deposition Test Form')
+    _subtitle = "Access to all submitted data will be restricted to the "\
+                "CMS collaboration only."
+    _drafting = True   # enable and disable drafting
+
+    # ------------------------------------------------------------------------
+    # --- Intro --------------------------------------------------------------
+    # ------------------------------------------------------------------------
+    json = JsonField(
+        label='testlabel',
+        schema=internal_schema_url('forms', 'cars_and_fun-v1.0.0.json')
+    )

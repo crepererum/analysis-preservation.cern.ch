@@ -24,8 +24,8 @@ Data repository.
 """
 
 import os
-from setuptools import setup, find_packages
 
+from setuptools import find_packages, setup
 
 
 # Load __version__, should not be done using import.
@@ -34,7 +34,6 @@ g = {}
 with open(os.path.join('invenio_data', 'version.py'), 'rt') as fp:
     exec(fp.read(), g)
 version = g['__version__']
-
 
 setup(
     name='Invenio-Data',
@@ -51,6 +50,8 @@ setup(
     platforms='any',
     install_requires=[
         'Invenio>=1.9999.4',
+        'jsonpointer>=1.9',
+        'jsonschema>=2.5.0',
     ],
     extras_require={
         'development': [

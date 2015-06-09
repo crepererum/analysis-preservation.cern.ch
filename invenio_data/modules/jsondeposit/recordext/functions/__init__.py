@@ -1,6 +1,7 @@
-{#
+# -*- coding: utf-8 -*-
+#
 # This file is part of CERN Analysis Preservation Framework.
-# Copyright (C) 2014, 2015 CERN.
+# Copyright (C) 2015 CERN.
 #
 # CERN Analysis Preservation Framework is free software; you can
 # redistribute it and/or modify it under the terms of the GNU General
@@ -16,32 +17,5 @@
 # along with this software; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307,
 # USA.
-#}
 
-<div class="record-detailed">
-
-  <div class="record-header">
-    {% block header%}
-    {% endblock %}
-  </div>
-
-  <div class="record-details">
-    {% block details %}
-    {% endblock %}
-  </div>
-
-  <div class="record-abstract">
-    {% block abstract %}
-    {% endblock %}
-  </div>
-
-  <div>
-    {% block data %}
-    {% endblock %}
-  </div>
-
-
-</div>
-
-{% block footer %}
-{% endblock %}
+"""Recordext functions for jsondeposit."""
