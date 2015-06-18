@@ -50,6 +50,7 @@ _invenio_js.contents.extend([
     "vendors/select2/select2.js",
     "vendors/json-editor/dist/jsoneditor.js",
     "js/jsondeposit/record.js",
+    "js/jsondeposit/fingerprint.js",
 ])
 
 _invenio_js.bower.update({
@@ -71,6 +72,7 @@ _deposit_css.contents.append(Bundle(
 
 _invenio_css.contents.append(Bundle(
     "less/jsondeposit/record.less",
+    "less/jsondeposit/fingerprint.less",
     Bundle(
         "vendors/select2/select2.css",
         "vendors/select2/select2-bootstrap.css",
