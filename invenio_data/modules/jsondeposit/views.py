@@ -20,7 +20,19 @@
 
 """Views for jsondeposit."""
 
-from flask import Blueprint
+from collections import OrderedDict
+
+import os
+import os.path
+
+from flask import Blueprint, current_app, render_template
+
+from flask_breadcrumbs import register_breadcrumb
+
+from invenio.base.i18n import _
+
+from .utils import internal_schema_url
+
 
 blueprint = Blueprint(
     'data_jsondeposit',
@@ -28,3 +40,53 @@ blueprint = Blueprint(
     static_folder='static',
     template_folder='templates',
 )
+
+
+@blueprint.route('/jsonschema', methods=['GET', 'POST'])
+@register_breadcrumb(blueprint, '.jsonschema', _('JSON Schema'))
+def register():
+    json_schema_path = current_app.config.get('JSON_SCHEMAPATH', 'jsonschema')
+    schema_path_generated = os.path.join(
+        current_app.static_folder,
+        'gen',
+        json_schema_path
+    )
+
+    def _split_path(string):
+        result = []
+        while string:
+            head, tail = os.path.split(string)
+            result.insert(0, tail)
+            string = head
+        return result
+
+    def _tree_insert(tree, path, element):
+        if path:
+            current = path.pop(0)
+            if current not in tree:
+                tree[current] = dict()
+            _tree_insert(tree[current], path, element)
+        else:
+            if '.' not in tree:
+                tree['.'] = list()
+            tree['.'].append(element)
+
+    def _tree_sort(tree):
+        result = OrderedDict()
+        if '.' in tree:
+            sub = tree.pop('.')
+            result['.'] = list(sorted(sub, key=lambda e: e['name']))
+        for k in sorted(tree.iterkeys()):
+            result[k] = _tree_sort(tree[k])
+        return result
+
+    tree = dict()
+    for root, dirs, files in os.walk(schema_path_generated):
+        for name in files:
+            path = _split_path(os.path.relpath(root, schema_path_generated))
+            _tree_insert(tree, path, {
+                'name': name,
+                'link': internal_schema_url(*(path + [name]))
+            })
+
+    return render_template('jsondeposit/schema.html', tree=_tree_sort(tree))

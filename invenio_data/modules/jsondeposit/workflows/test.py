@@ -47,8 +47,8 @@ class test(SimpleRecordDeposition):
     def process_sip_metadata(cls, deposition, metadata):
         """Map keywords to match jsonalchemy configuration."""
         metadata['json']['$schema'] = metadata['json']['$schema'].replace(
-            current_app.config.get('JSON_SCHEMAPATH', 'jsonschema') + '/forms',
-            'gen/' + current_app.config.get('JSON_SCHEMAPATH', 'jsonschema') + '/records'
+            '/forms',
+            '/records'
         )
 
         metadata["jsonblob"] = json2blob(metadata["json"])

@@ -35,7 +35,7 @@ from invenio.ext.assets import Bundle, RequireJSFilter
 from invenio.modules.deposit.bundles import js as _deposit_js, \
     styles as _deposit_css
 
-from .filter import CSSUrlFixer, SchemaAllof
+from .filter import CSSUrlFixer, JSONOptimize, SchemaAllof
 
 _deposit_js.contents.append(Bundle(
     "vendors/select2/select2.js",
@@ -81,6 +81,29 @@ _invenio_css.contents.append(Bundle(
     filters="less,cleancss",
 ))
 
+def _gen_bundlename(s, prefix):
+    return prefix + re.sub(
+        '[^a-z0-9]', '_',
+        s.lower()
+    )
+
+# optimize all json files
+json_schema_path = current_app.config.get('JSON_SCHEMAPATH', 'jsonschema')
+schema_path_collected = os.path.join(
+    current_app.static_folder,
+    json_schema_path
+)
+
+for root, dirs, files in os.walk(schema_path_collected):
+    for name in files:
+        path = os.path.join(json_schema_path, os.path.relpath(root, schema_path_collected), name)
+        bundle_name = _gen_bundlename(path, 'gen_schemaopt_')
+        globals()[bundle_name] = Bundle(
+            path,
+            output=path,
+            filters=JSONOptimize()
+        )
+
 # auto-generate record schemas
 json_schema_path = current_app.config.get('JSON_SCHEMAPATH', 'jsonschema')
 form_schema_path = os.path.join(
@@ -104,10 +127,7 @@ if os.path.isdir(form_schema_path):
         f.endswith('.json')
     )
     for f in form_schemas:
-        bundle_name = 'gen_records_' + re.sub(
-            '[^a-z0-9]', '',
-            ''.join(f.split('.json')[:-1]).lower()
-        )
+        bundle_name = _gen_bundlename(f, 'gen_records_')
         source_path = os.path.join(
             json_schema_path,
             'forms',
@@ -128,5 +148,5 @@ if os.path.isdir(form_schema_path):
             source_path,
             base_path,
             output=target_path,
-            filters=SchemaAllof()
+            filters=[SchemaAllof(), JSONOptimize()]
         )

@@ -96,6 +96,7 @@ def internal_schema_url(*parts):
     """Return the URL to an internal JSON schema."""
     return urljoin(
         current_app.config.get('CFG_SITE_SECURE_URL'),
+        'gen',
         current_app.config.get('JSON_SCHEMAPATH', 'jsonschema'),
         *parts
     )
@@ -112,7 +113,10 @@ def get_schema(uri):
     uri_parsed = urlparse.urlparse(uri)
 
     # 1. interal resource?
-    prefix = current_app.config.get('JSON_SCHEMAPATH', 'jsonschema')
+    prefix = urljoin(
+        'gen',
+        current_app.config.get('JSON_SCHEMAPATH', 'jsonschema')
+    )
 
     def calc_interal_path(base):
         """Calculate interal file path based on a `CFG_SITE[_SECURE]_URL`."""
