@@ -34,7 +34,7 @@
         <div class="col-md-2">{{ _('ID') }}:</div>
         <div class="col-md-10">{{ record._id }}</div>
         <div class="col-md-2">{{ _('Schema') }}:</div>
-        <div class="col-md-10"><a href="{{ record.json.get('$schema') }}">{{ record.json.get('$schema') }}</a></div>
+        <div class="col-md-10"><a href="{{ url_for('jsonschema') }}#{{ record.json.get('$schema') }}">{{ record.json.get('$schema') }}</a></div>
         <div class="col-md-2">{{ _('Created') }}:</div>
         <div class="col-md-10">{{ record.creation_date }}</div>
         <div class="col-md-2">{{ _('Modified') }}:</div>

@@ -58,6 +58,7 @@ require.config({
     "ckeditor-jquery": "vendors/ckeditor/adapters/jquery",
     "base64": "vendors/base-64/base64",
     "utf8": "vendors/utf8/utf8",
+    "renderjson": "vendors/renderjson/renderjson",
   },
   shim: {
     jquery: {

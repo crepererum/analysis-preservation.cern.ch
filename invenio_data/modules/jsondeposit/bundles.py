@@ -81,6 +81,24 @@ _invenio_css.contents.append(Bundle(
     filters="less,cleancss",
 ))
 
+schema_js = Bundle(
+    "js/jsondeposit/schema.js",
+    output='jsonschema.js',
+    filters=RequireJSFilter(
+        exclude=[_j, _invenio_js],
+    ),
+    bower={
+        'renderjson': 'latest',
+    }
+)
+
+schema_css = Bundle(
+    "less/jsondeposit/schema.less",
+    output='jsonschema.css',
+    filters="less,cleancss",
+)
+
+
 def _gen_bundlename(s, prefix):
     return prefix + re.sub(
         '[^a-z0-9]', '_',

@@ -26,8 +26,12 @@
 {% endblock %}
 
 {% block record_info %}
-  <canvas class="jsonfingerprint" data-blob="recordbrief-{{ record._id }}"></canvas><br />
-  {{ _('Schema') }}: <a href="{{ record.json.get('$schema') }}">{{ record.json.get('$schema') }}</a>
+  <div class="jsonfingerprint-metacontainer">
+    <div class="jsonfingerprint-container" data-toggle="popover" data-trigger="hover" data-delay="200" data-html="true" title="{{ _('Fingerprint') }}" data-content="{{ _('Shows a visual fingerprint of the record.')}}<br />{{ _('Makes it easier to compare the similarity of multiple documents.') }}">
+      <i class="fa fa-th fa-fw"></i> <canvas class="jsonfingerprint" data-blob="recordbrief-{{ record._id }}"></canvas><br />
+    </div>
+  </div>
+  <i class="fa fa-cube fa-fw"></i>  <a href="{{ url_for('jsonschema') }}#{{ record.json.get('$schema') }}">{{ record.json.get('$schema') }}</a>
 {% endblock %}
 
 {% block fulltext_snippets %}
