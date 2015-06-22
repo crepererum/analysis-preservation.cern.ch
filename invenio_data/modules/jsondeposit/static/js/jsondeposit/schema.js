@@ -23,26 +23,72 @@ require(['jquery', 'renderjson'], function($, _renderjson) {
   'use strict';
 
   $(function() {
+    function linkify(target) {
+        $('.key', target).each(function() {
+            var element = this;
+
+            // test if the key is "$ref"
+            if ($(element).text() === '"$ref"') {
+                // now search the first '.string' element after
+                // the key element, on the same tree level
+                // (i.e. a sibling)
+                var parent = $(element).parent();
+                var siblings = $(parent).children();
+                var seen = false;
+                for (var i = 0; i < siblings.length; ++i) {
+                    var sibling = siblings[i];
+                    if (seen) {
+                        if ($(sibling).hasClass('string')) {
+                            // store text and empty node
+                            var txt = $(sibling).text();
+                            $(sibling).empty();
+
+                            // strip quotes
+                            var url = txt.substring(1, txt.length - 1);
+
+                            // create link element
+                            var a = $('<a>');
+                            a.attr('href', '#' + url);
+                            a.text(txt);
+
+                            // add link to element
+                            $(sibling).append(a);
+
+                            // done
+                            break;
+                        }
+                    } else {
+                        if (sibling === element) {
+                            seen = true;
+                        }
+                    }
+                }
+            }
+        });
+    }
+
     function update() {
         if (location.hash.startsWith('#') && location.hash.length > 1) {
             var url = location.hash.substring(1);
 
             // security check
             if (url.startsWith(location.origin)) {
-                jQuery.getJSON(url, function(data) {
+                // strip fragment from url
+                var file = url.split('#')[0];
+                $.getJSON(file, function(data) {
                     var target = $('#jsonschema-detailed');
 
                     // set new detailed view
                     target.empty();
 
-                    var rawlink_url = url;
-                    if (rawlink_url.startsWith(location.origin)) {
-                        rawlink_url = rawlink_url.replace(location.origin + '/gen/jsonschema/', '');
+                    var rawlink_file = file;
+                    if (rawlink_file.startsWith(location.origin)) {
+                        rawlink_file = rawlink_file.replace(location.origin + '/gen/jsonschema/', '');
                     }
 
                     var rawlink = $('<a>');
                     rawlink.attr('href', url);
-                    rawlink.text('Schema: ' + rawlink_url);
+                    rawlink.text('Schema: ' + rawlink_file);
                     rawlink.addClass('rawlink');
                     target.append(rawlink);
 
@@ -50,47 +96,7 @@ require(['jquery', 'renderjson'], function($, _renderjson) {
                     target.append(renderjson(data));
 
                     // link all refs
-                    $('.key', target).each(function() {
-                        var element = this;
-
-                        // test if the key is "$ref"
-                        if ($(element).text() == '"$ref"') {
-                            // now search the first '.string' element after
-                            // the key element, on the same tree level
-                            // (i.e. a sibling)
-                            var parent = $(element).parent();
-                            var siblings = $(parent).children();
-                            var seen = false;
-                            for (var i = 0; i < siblings.length; ++i) {
-                                var sibling = siblings[i];
-                                if (seen) {
-                                    if ($(sibling).hasClass('string')) {
-                                        // store text and empty node
-                                        var txt = $(sibling).text();
-                                        $(sibling).empty();
-
-                                        // strip quotes
-                                        var url = txt.substring(1, txt.length - 1);
-
-                                        // create link element
-                                        var a = $('<a>');
-                                        a.attr('href', '#' + url);
-                                        a.text(txt);
-
-                                        // add link to element
-                                        $(sibling).append(a);
-
-                                        // done
-                                        break;
-                                    }
-                                } else {
-                                    if (sibling == element) {
-                                        seen = true;
-                                    }
-                                }
-                            }
-                        }
-                    });
+                    linkify(target);
 
                     // mark active link
                     $('.jsonschema-link').removeClass('active');
