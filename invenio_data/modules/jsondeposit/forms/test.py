@@ -23,8 +23,11 @@
 from invenio.base.i18n import _
 from invenio.modules.deposit.form import WebDepositForm
 
+from invenio_data.modules.schema.utils import internal_schema_url
+
+from speaklater import make_lazy_string
+
 from ..jsonfield import JsonField
-from ..utils import internal_schema_url
 
 
 __all__ = ('TestForm', )
@@ -46,5 +49,5 @@ class TestForm(WebDepositForm):
     # ------------------------------------------------------------------------
     json = JsonField(
         label='testlabel',
-        schema=internal_schema_url('forms', 'cars_and_fun-v1.0.0.json')
+        schema=make_lazy_string(lambda: internal_schema_url('forms', 'cars_and_fun-v1.0.0.json'))
     )

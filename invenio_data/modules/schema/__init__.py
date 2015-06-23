@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of CERN Analysis Preservation Framework.
-# Copyright (C) 2014, 2015 CERN.
+# Copyright (C) 2015 CERN.
 #
 # CERN Analysis Preservation Framework is free software; you can
 # redistribute it and/or modify it under the terms of the GNU General
@@ -18,14 +18,4 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307,
 # USA.
 
-"""Views for jsondeposit."""
-
-from flask import Blueprint
-
-
-blueprint = Blueprint(
-    'data_jsondeposit',
-    __name__,
-    static_folder='static',
-    template_folder='templates',
-)
+"""Special deposit fields and forms for JSON-schema driven deposits."""

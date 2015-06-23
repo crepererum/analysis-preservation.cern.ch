@@ -23,12 +23,14 @@
 from invenio.ext.template import render_template_to_string
 from invenio.modules.deposit.field_base import WebDepositField
 
+from invenio_data.modules.schema.utils import validate_json
+
 import jsonschema
 
 import wtforms.validators
 from wtforms.widgets import HTMLString
 
-from .utils import blob2json, json2blob, validate_json
+from .utils import blob2json, json2blob
 
 __all__ = ['JsonField']
 
@@ -105,4 +107,4 @@ class JsonField(WebDepositField):
     def blob(self, b):
         """Set JSON data from base64 blob."""
         self.data = blob2json(b)
-        self.data['$schema'] = self.schema
+        self.data['$schema'] = str(self.schema)

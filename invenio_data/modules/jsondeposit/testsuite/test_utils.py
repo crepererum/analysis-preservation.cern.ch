@@ -47,65 +47,6 @@ class UtilsTest(InvenioTestCase):
             'incorrect full serializaion + deserialization'
         )
 
-    def test_urljoin(self):
-        from invenio_data.modules.jsondeposit.utils import urljoin
-
-        self.assertEqual(
-            urljoin('http://test.org'),
-            'http://test.org',
-            'touches normal URL'
-        )
-        self.assertEqual(
-            urljoin('http://test.org', 'foo'),
-            'http://test.org/foo',
-            'cannot do a simple append'
-        )
-        self.assertEqual(
-            urljoin('http://test.org', 'foo/'),
-            'http://test.org/foo/',
-            'does not respect trailing slash'
-        )
-        self.assertEqual(
-            urljoin('http://test.org/', 'foo'),
-            'http://test.org/foo',
-            'does not handle trailing slash in first component correctly'
-        )
-        self.assertEqual(
-            urljoin('http://test.org', '/foo'),
-            'http://test.org/foo',
-            'does not handle leading slash in second component correctly'
-        )
-        self.assertEqual(
-            urljoin('http://test.org/', '/foo'),
-            'http://test.org/foo',
-            'does not handle trailing + leading slash correctly'
-        )
-        self.assertEqual(
-            urljoin('http://test.org/', 'foo', 'bar'),
-            'http://test.org/foo/bar',
-            'does not handle 3 components'
-        )
-        self.assertEqual(
-            urljoin('http://test.org/', 'foo', 'bar', 'x', 'y', 'z'),
-            'http://test.org/foo/bar/x/y/z',
-            'does not handle 6 components'
-        )
-        self.assertEqual(
-            urljoin(),
-            '',
-            'does not handle zero components'
-        )
-        self.assertEqual(
-            urljoin('http://test.org/', '/foo?p=1'),
-            'http://test.org/foo?p=1',
-            'does not handle query parameters correctly'
-        )
-        self.assertEqual(
-            urljoin('http://test.org/', '/foo#bar'),
-            'http://test.org/foo#bar',
-            'does not handle fragments correctly'
-        )
-
 
 TEST_SUITE = make_test_suite(UtilsTest)
 

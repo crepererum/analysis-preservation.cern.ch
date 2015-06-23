@@ -83,7 +83,7 @@ require(['jquery', 'renderjson'], function($, _renderjson) {
 
                     var rawlink_file = file;
                     if (rawlink_file.startsWith(location.origin)) {
-                        rawlink_file = rawlink_file.replace(location.origin + '/gen/jsonschema/', '');
+                        rawlink_file = rawlink_file.replace(location.origin + '/schema/', '');
                     }
 
                     var rawlink = $('<a>');

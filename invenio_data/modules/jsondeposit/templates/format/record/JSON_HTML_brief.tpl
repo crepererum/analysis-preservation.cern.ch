@@ -31,7 +31,7 @@
       <i class="fa fa-th fa-fw"></i> <canvas class="jsonfingerprint" data-blob="recordbrief-{{ record._id }}"></canvas><br />
     </div>
   </div>
-  <i class="fa fa-cube fa-fw"></i>  <a href="{{ url_for('jsonschema') }}#{{ record.json.get('$schema') }}">{{ record.json.get('$schema') }}</a>
+  <i class="fa fa-cube fa-fw"></i>  <a href="{{ url_for('schema.index') }}#{{ record.json.get('$schema') }}">{{ record.json.get('$schema') }}</a>
 {% endblock %}
 
 {% block fulltext_snippets %}

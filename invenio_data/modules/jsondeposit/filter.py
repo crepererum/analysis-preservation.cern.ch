@@ -22,22 +22,13 @@
 
 from __future__ import unicode_literals
 
-import json
-import os
-import os.path
-
 from flask import current_app
 
-from webassets.filter import Filter
 from webassets.filter.cssrewrite.base import PatternRewriter, urltag_re
-
-from .utils import internal_schema_url
 
 
 __all__ = (
     'CSSUrlFixer',
-    'JSONOptimize',
-    'SchemaAllof',
 )
 
 
@@ -89,53 +80,3 @@ class CSSUrlFixer(PatternRewriter):
             self.subpath,
             url
         )
-
-
-class JSONOptimize(Filter):
-
-    name = 'json_optimize'
-
-    def output(self, _in, out, **kwargs):
-        j = json.loads(_in.read())
-        out.write(
-            json.dumps(
-                j,
-                separators=(',', ':')
-            )
-        )
-
-
-class SchemaAllof(Filter):
-
-    """Combine multiple JSON schemas using `allOf`."""
-
-    name = 'schema_allof'
-
-    def input(self, _in, out, **kwargs):
-        """Input filter, that transforms schemas into their URLs."""
-        schema = kwargs['source_path']
-
-        out.write('{"$ref":"')
-        out.write(internal_schema_url(
-            os.path.relpath(
-                schema,
-                os.path.join(
-                    current_app.static_folder,
-                    current_app.config.get('JSON_SCHEMAPATH', 'jsonschema')
-                )
-            )
-        ))
-        out.write('"},')
-
-    def output(self, _in, out, **kwargs):
-        """Output filter, that does the boilerplate."""
-        out.write('{')
-        out.write('"allOf": [')
-
-        s = _in.read()
-        if s.endswith(','):
-            s = s[:-1]
-        out.write(s)
-
-        out.write(']')
-        out.write('}')
