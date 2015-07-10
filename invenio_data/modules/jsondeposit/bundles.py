@@ -52,6 +52,9 @@ _invenio_js.bower.update({
     "json-editor": "latest",
     "select2": "~3",
     "utf8": "latest",
+    'fuse.js': 'latest',
+    'tv4': 'latest',
+    'Sortable': 'latest',
 })
 
 _deposit_css.contents.append(Bundle(

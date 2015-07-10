@@ -21,8 +21,20 @@
 .jsonrecord {
     text-align: initial;
 
+    label {
+        display: inline-block;
+        width: 20%;
+    }
+
     .row {
         margin: 0;
+    }
+
+    .form-control {
+        display: inline-block;
+        height: 38px;
+        padding: 6px 12px;
+        width: 80%;
     }
 
     .form-control[disabled] {
@@ -30,14 +42,16 @@
         cursor: initial;
     }
 
-    .select2-container {
-        display: block;
+    .form-control.select2-container {
+        display: inline-block;
+        padding: 6px 12px;
     }
 
     .select2-container.select2-container-disabled .select2-choice {
         background-color: #FFF;
         border: none;
         cursor: text;
+        padding: 0;
 
         -webkit-user-select: all;
         -moz-user-select: all;
@@ -119,3 +133,341 @@
         text-align: right;
     }
 }
+
+.knight-main {
+    background-color: #fff;
+}
+
+// focus
+.knight-main:focus, .knight-main *:focus,
+.knight-ringcontainer:focus, .knight-ringcontainer *:focus,
+.knight-searchcontainer:focus, .knight-searchcontainer *:focus {
+    outline: none;
+}
+
+.knight-main:focus, .knight-main *:focus {
+    background-color: rgba(51, 122, 183, 0.3) !important;
+}
+
+.knight-button {
+    cursor: pointer;
+}
+
+.knight-button:hover {
+    color: #337ab7;
+}
+
+.knight-a {
+    display: block;
+    float: left;
+    width: 22px;
+}
+
+.knight-b {
+    display: block;
+    margin-left: 22px;
+    padding-right: 10px;
+
+    > * {
+        margin: 0;
+        padding: 0;
+        word-wrap: break-word;
+    }
+}
+
+// checkbox for boolean input
+.knight-boolean > .knight-b > input {
+    display: inline-block;
+    width: 20px;
+}
+
+// fix array counter alignment
+.knight-array {
+    list-style-position: inside;
+}
+
+.knight-arrayrow {
+    border-top: 1px solid rgb(180, 180, 180);
+}
+
+.knight-arrayrow:first-child {
+    border-top: none;
+}
+
+.knight-arrayrow,
+.knight-objectrow {
+    clear: left;
+    float: left;
+    width: 100%;
+}
+
+.knight-arraybody,
+.knight-objectbody {
+    float: left;
+    padding-top: 10px;
+    width: 100%;
+}
+
+// array scrolling
+.knight-scrollhelper {
+    direction: rtl;
+    max-height: 400px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    > * {
+        direction: ltr;
+        float: initial; // seems to be a bug
+    }
+}
+
+.knight-arrayrow > .knight-boolean,
+.knight-arrayrow > .knight-null,
+.knight-arrayrow > .knight-number,
+.knight-arrayrow > .knight-string,
+.knight-arrayrow > .knight-unknown {
+    width: 100%;
+}
+
+.knight-label {
+    float: left;
+    font-weight: 700;
+    padding-right: 10px;
+    text-align: right;
+    width: 20%;
+}
+
+.knight-null {
+    font-style: italic;
+}
+
+.knight-array,
+.knight-object {
+    float: left;
+    display: block;
+    padding-left: 20px;
+    width: 100%;
+}
+
+.knight-array {
+    > .knight-marginhelper {
+        border-left: 2px dotted black;
+    }
+}
+
+.knight-object {
+    > .knight-marginhelper {
+        border-left: 2px solid black;
+    }
+}
+
+.knight-arrayhead,
+.knight-objecthead {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+
+    cursor: pointer;
+    padding-right: 10px;
+}
+
+// add spacing below objects/arrays, when they are attribute values
+.knight-objectrow > .knight-sub {
+    > .knight-object,
+    > .knight-array {
+        padding-bottom: 10px;
+    }
+}
+
+// remove spacing from the most outer object
+.knight-main > .knight-object {
+    padding: 0;
+}
+
+.knight-boolean,
+.knight-null,
+.knight-number,
+.knight-string,
+.knight-unknown {
+    float: left;
+
+    > .knight-a {
+        text-align: right;
+    }
+
+    > .knight-b > * {
+        background-color: inherit;
+        border: none;
+        padding: 0 5px;
+    }
+}
+
+.knight-null,
+.knight-number,
+.knight-string,
+.knight-unknown {
+    > .knight-b > * {
+        width: 100%;
+    }
+}
+
+
+.knight-sub > .knight-boolean,
+.knight-sub > .knight-null,
+.knight-sub > .knight-number,
+.knight-sub > .knight-string,
+.knight-sub > .knight-unknown {
+    width: 80%;
+}
+
+.knight-unkown {
+    color: red;
+}
+
+.knight-end {
+    margin-bottom: 20px;
+}
+
+.knight-marginhelper {
+    background-color: rgba(220, 220, 220, 0.3);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    float: left;
+    padding: 10px;
+    padding-right: 0;
+    width: 100%;
+}
+
+.knight-ringcontainer {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+
+    position: fixed;
+
+    background-color: rgb(180, 180, 180);
+
+    z-index: 501;
+}
+
+.knight-cover {
+    background-color: rgba(180, 180, 180, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 500;
+    height: 100%;
+    width: 100%;
+}
+
+.knight-ringicon {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+}
+
+.knight-searchcontainer {
+    position: fixed;
+    width: 100%;
+    height: 45px;
+    left: 0;
+    bottom: 0;
+    background-color: rgb(180, 180, 180);
+    padding: 10px;
+    z-index: 501;
+
+    float: left;
+
+    > .knight-a {
+        background-color: #fff;
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+        line-height: 26px;
+        text-align: right;
+    }
+
+    > .knight-b {
+        line-height: 26px;
+    }
+}
+
+.knight-searchinput {
+    background-color: #fff;
+    border: none;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    font-size: 16px;
+    line-height: 16px;
+    height: 26px;
+    margin: 0;
+    padding: 5px 10px;
+    width: 100%;
+}
+
+.knight-status-error {
+    box-shadow: #d9534f 0 0 10px inset;
+}
+
+.knight-annotation-errorschema,
+.knight-annotation-errorstate {
+    position: relative;
+
+    > div {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        z-index: 400;
+        transform: translateX(-50%);
+
+        background-color: #d9534f;
+        border-radius: 3px;
+        color: #222;
+        cursor: default;
+        font-weight: 700;
+        padding: 10px;
+        text-align: left; // required because parent element might be something else
+        min-width: 200px;
+        max-width: 300px;
+        opacity: 0.8;
+    }
+
+    > div:hover {
+        opacity: 0.2;
+    }
+
+    // add arrow to annotation
+    > div:before {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        pointer-events: none;
+
+        border-color: rgba(0, 0, 0, 0);
+        border-top-color: #d9534f;
+        border-width: 10px;
+        margin-left: -10px;
+    }
+}
+// try to make it sticky
+@supports (position: sticky) {
+    .knight-annotation-errorschema,
+    .knight-annotation-errorstate {
+        position: sticky;
+        top: 60px;
+    }
+}
+

@@ -59,6 +59,9 @@ require.config({
     "base64": "vendors/base-64/base64",
     "utf8": "vendors/utf8/utf8",
     "renderjson": "vendors/renderjson/renderjson",
+    "fuse": "vendors/fuse.js/src/fuse",
+    "tv4": "vendors/tv4/tv4",
+    "sortable": "vendors/Sortable/Sortable",
   },
   shim: {
     jquery: {

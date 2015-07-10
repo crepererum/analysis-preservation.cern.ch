@@ -21,6 +21,7 @@
 {% extends "format/record/Default_HTML_detailed.tpl" %}
 
 {% block details %}
+   <script src='http://localhost:8080/jsoneditor.js'></script>
     <div class="jsonrecord" data-id="{{ record._id }}" data-schema="{{ record.json['$schema'] }}">
       <div class="jsonrecord-loading well well-lg"><i class="fa fa-spinner fa-spin"></i> {{ _('Loading') }}</div>
       <div id="jsonrecord-{{ record._id }}-rendered" class="jsonrecord-rendered"></div>
