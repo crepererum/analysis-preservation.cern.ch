@@ -29,16 +29,7 @@ from invenio.ext.assets import Bundle, RequireJSFilter
 from invenio.modules.deposit.bundles import js as _deposit_js, \
     styles as _deposit_css
 
-from .filter import CSSUrlFixer
-
-_deposit_js.contents.append(Bundle(
-    "vendors/select2/select2.js",
-    "vendors/json-editor/dist/jsoneditor.js",
-    "js/jsondeposit/form.js",
-    filters=RequireJSFilter(
-        exclude=[_j, _invenio_js],
-    ),
-))
+from invenio.modules.deposit.filter import CSSUrlFixer
 
 _invenio_js.contents.extend([
     "vendors/select2/select2.js",
@@ -48,24 +39,10 @@ _invenio_js.contents.extend([
 ])
 
 _invenio_js.bower.update({
-    "base-64": "latest",
-    "json-editor": "latest",
-    "select2": "~3",
-    "utf8": "latest",
     'fuse.js': 'latest',
     'tv4': 'latest',
     'Sortable': 'latest',
 })
-
-_deposit_css.contents.append(Bundle(
-    "less/jsondeposit/form.less",
-    Bundle(
-        "vendors/select2/select2.css",
-        "vendors/select2/select2-bootstrap.css",
-        filters=CSSUrlFixer('vendors/select2')
-    ),
-    filters="less,cleancss",
-))
 
 _invenio_css.contents.append(Bundle(
     "less/jsondeposit/record.less",

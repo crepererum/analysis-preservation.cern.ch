@@ -21,19 +21,19 @@
 """Test form for jsondeposit."""
 
 from invenio.base.i18n import _
-from invenio.modules.deposit.form import WebDepositForm
+
+from invenio.modules.deposit.form import JsonForm, WebDepositForm
 
 from invenio_data.modules.schema.utils import internal_schema_url
 
 from speaklater import make_lazy_string
-
-from ..jsonfield import JsonField
 
 
 __all__ = ('TestForm', )
 
 
 class TestForm(WebDepositForm):
+    __metaclass__ = JsonForm
 
     """Deposition Form."""
 
@@ -43,11 +43,4 @@ class TestForm(WebDepositForm):
     _subtitle = "Access to all submitted data will be restricted to the "\
                 "CMS collaboration only."
     _drafting = True   # enable and disable drafting
-
-    # ------------------------------------------------------------------------
-    # --- Intro --------------------------------------------------------------
-    # ------------------------------------------------------------------------
-    json = JsonField(
-        label='testlabel',
-        schema=make_lazy_string(lambda: internal_schema_url('forms', 'cars_and_fun-v1.0.0.json'))
-    )
+    _schema = make_lazy_string(lambda: internal_schema_url('forms', 'cars_and_fun-v1.0.0.json'))

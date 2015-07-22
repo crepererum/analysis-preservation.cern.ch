@@ -1,5 +1,5 @@
 content_type: text/html
-default: Default_HTML_detailedFOO.tpl
+default: Default_HTML_detailed.tpl
 description: HTML detailed output format, used for Detailed record pages.
 name: HTML detailed
 rules:
