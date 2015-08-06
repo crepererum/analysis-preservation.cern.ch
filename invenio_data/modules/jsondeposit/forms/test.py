@@ -24,7 +24,7 @@ from invenio.base.i18n import _
 
 from invenio.modules.deposit.form import JsonForm, WebDepositForm
 
-from invenio_data.modules.schema.utils import internal_schema_url
+from invenio_jsonschemas.api import internal_schema_url
 
 from speaklater import make_lazy_string
 

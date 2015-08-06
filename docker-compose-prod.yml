@@ -21,7 +21,7 @@ web:
   build: .
   command: inveniomanage runserver -h 0.0.0.0 -p 28080 -d -r
   ports:
-    - "127.0.0.1:28080:28080"
+    - "80:28080"
   environment:
     - ASSETS_DEBUG=True
     - BROKER_URL=amqp://guest:guest@rabbit:5672//
@@ -33,12 +33,6 @@ web:
     - DEBUG_TB_INTERCEPT_REDIRECTS=False
     - ES_HOSTS=['es']
     - INVENIO_APP_CONFIG_ENVS=ASSETS_DEBUG,BROKER_URL,CELERY_RESULT_BACKEND,CACHE_REDIS_HOST,CFG_DATABASE_HOST,CFG_REDIS_HOSTS,DEBUG,DEBUG_TB_INTERCEPT_REDIRECTS,ES_HOSTS
-  volumes:
-    - ../invenio/invenio:/code/invenio:ro
-    - ../invenio/docs:/code/docs:rw
-    - ../invenio/scripts:/code/scripts:ro
-    - ./invenio_data:/code-overlay/invenio_data:ro
-    - /code/invenio/base/translations
   read_only: true
   links:
     - elasticsearch:es

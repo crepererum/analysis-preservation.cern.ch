@@ -18,13 +18,18 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
 # 02D111-1307, USA.
 
-from invenio.base.config import PACKAGES as _PACKAGES
+from invenio.base.config import PACKAGES as _PACKAGES, PACKAGES_EXCLUDE as _PACKAGES_EXCLUDE
 from invenio.modules.oauthclient.contrib import cern
 
 PACKAGES = [
     "invenio_data.base",
     "invenio_data.modules.*",
 ] + _PACKAGES
+
+PACKAGES_EXCLUDE = [
+    "invenio_annotations",
+    "invenio_comments",
+] + _PACKAGES_EXCLUDE
 
 DEPOSIT_TYPES = [
     'invenio_data.modules.deposit.workflows.cms.cms',
@@ -86,3 +91,5 @@ CERN_APP_CREDENTIALS = dict(
     consumer_key="changeme",
     consumer_secret="changeme",
 )
+
+JSONSCHEMAS_BASE_SCHEMA = 'base/record-v1.0.0.json'
